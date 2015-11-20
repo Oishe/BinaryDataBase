@@ -2,6 +2,8 @@
 #define _TREENODE_H
 
 #include "DBentry.h"
+#include <string>
+using namespace std;
 
 class TreeNode {
 private:
