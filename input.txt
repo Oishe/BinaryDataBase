@@ -1,0 +1,3 @@
+insert  www.google.com  283983  active
+insert  www.yahoo.com  191333  active
+insert  www.eecg.utoronto.ca  179333  inactive
