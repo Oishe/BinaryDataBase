@@ -9,6 +9,8 @@ class TreeDB {
 private:
    TreeNode* root;
    int probesCount;
+   bool insertTool (TreeNode* tempTN, DBentry* tempDB, int & p);
+   DBentry* findTool (TreeNode* tempTN, string name);
    // You will need to add additional private functions
 
 public:
@@ -18,6 +20,7 @@ public:
    // the destructor, deletes all the entries in the database.
    ~TreeDB();
 
+   TreeNode* getRoot() const;
    // inserts the entry pointed to by newEntry into the database. 
    // If an entry with the same key as newEntry's exists 
    // in the database, it returns false. Otherwise, it returns true.
@@ -37,7 +40,7 @@ public:
    // maximum node in the left subtree when the deleted node has two children)
    // you will not match exercise's output.
    bool remove(string name);
-	
+   
    // deletes all the entries in the database.
    void clear();
     
@@ -49,12 +52,12 @@ public:
    void countActive () const;
 
    // Prints the entire tree, in ascending order of key/name
-   friend ostream& operator<< (ostream& out, const TreeDB& rhs);
+   //friend ofstream& operator<< (ofstream& out, const TreeDB* rhs);
 }; 
 
 // You *may* choose to implement the function below to help print the 
 // tree.  You do not have to implement this function if you do not wish to.
-ostream& operator<< (ostream& out, TreeNode* rhs);   
+//ostream& operator<< (ostream& out, TreeNode* rhs);   
    
 #endif 
 

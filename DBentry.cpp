@@ -42,9 +42,9 @@ DBentry::~DBentry(){
 // prints the entry in the format 
 // name : IPaddress : active  followed by newline	
 // active is printed as a string (active or inactive)
-ofstream& operator<< (ofstream& out, const DBentry& rhs){
-	out << rhs.getName() << " : ";
-	out << rhs.getIPaddress() << " : ";
-	out <<(rhs.getActive()? "active":"inactive");
+ostream& operator<< (ostream& out, const DBentry* rhs){
+	out << rhs->getName() << " : ";
+	out << rhs->getIPaddress() << " : ";
+	out <<(rhs->getActive()? "active":"inactive");
 	return out;
 }

@@ -1,10 +1,15 @@
 > insert  www.google.com  283983  active
-www.google.com : 283983 : active
-
+Success
 > insert  www.yahoo.com  191333  active
-www.yahoo.com : 191333 : active
-
+Success
+> insert  www.google.com  291333  active  
+Error: entry already exists
 > insert  www.eecg.utoronto.ca  179333  inactive
-www.eecg.utoronto.ca : 179333 : inactive
-
+Success
+> insert  www.altera.com  283299  active
+Success
+> find  www.google.com
+www.google.com : 283983 : active
+> find www.facebook.com
+Error: entry does not exist
 > 

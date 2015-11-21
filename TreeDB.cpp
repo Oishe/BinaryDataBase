@@ -23,6 +23,25 @@ using namespace std;
 
    }
 
+   bool TreeDB::insertTool (TreeNode* tempTN, DBentry* tempDB, int & p){
+      if (tempTN == NULL)
+      {
+         tempTN = new TreeNode(tempDB);
+         p++;
+         return true;
+      }
+      else if (tempDB->getName() == tempTN->getEntry()->getName())
+         {return false;}
+      else if (tempDB->getName() < tempTN->getEntry()->getName())
+      {
+         return insertTool(tempTN->getLeft(), tempDB, p);
+      }
+      else
+      {
+         return insertTool(tempTN->getRight(), tempDB, p);
+      }
+
+   }
    // inserts the entry pointed to by newEntry into the database. 
    // If an entry with the same key as newEntry's exists 
    // in the database, it returns false. Otherwise, it returns true.
@@ -33,43 +52,27 @@ using namespace std;
          probesCount++;
          return true;
       }
-      else if (newEntry->getName() == root->getEntry()->getName())
-      {return false;}
-      else if (newEntry->getName() < root->getEntry()->getName())
-      {
-         if(root->getLeft()->insert(newEntry))
-         {
-            probesCount++;
-            return true;
-         }
-         else
-         {return false;}
-      }
-      else
-      {
-         if(root->getRight()->insert(newEntry))
-         {
-            probesCount++;
-            return true;
-         }
-         else
-         {return false;}  
-      }
-
+      else {return insertTool(root, newEntry, probesCount);}
    }  
 
    // searches the database for an entry with a key equal to name.
    // If the entry is found, a pointer to it is returned.
    // If the entry is not found, the NULL pointer is returned.
    // Also sets probesCount
-   DBentry* TreeDB::find(string name){
-      if (root==null){return NULL;}
-      else if (name == root->getEntry()->getName())
-         {return root->getEntry();}
-      else if (name < root->getEntry()->getName())
-         {return root->getLeft()->find(name);}
+   DBentry* TreeDB::findTool (TreeNode* tempTN, string name){
+      if (tempTN == NULL)
+      {return NULL;}
+      else if (name == tempTN->getEntry()->getName())
+      {return tempTN->getEntry();}
+      else if (name < tempTN->getEntry()->getName())
+      {return findTool(tempTN->getLeft(), name);}
       else
-         {return root->getRight()->find(name);}
+      {return findTool(tempTN->getRight(), name);}
+   }
+
+   DBentry* TreeDB::find(string name){
+      if (root==NULL){return NULL;}
+      else {return findTool(root, name);}
    }
 
    // deletes the entry with the specified name (key)  from the database.
@@ -79,19 +82,43 @@ using namespace std;
    // If you do not use that removal method (replace deleted node by
    // maximum node in the left subtree when the deleted node has two children)
    // you will not match exercise's output.
-   bool remove(string name);
+   bool TreeDB::remove(string name){
+      return true;
+   }
 	
    // deletes all the entries in the database.
-   void clear();
+   void TreeDB::clear(){
+
+   }
     
    // prints the number of probes stored in probesCount
    void TreeDB::printProbes() const{
-      //print probescount
+      //print probesCount
    }
    
    // computes and prints out the total number of active entries
    // in the database (i.e. entries with active==true).
-   void countActive () const;
+   void TreeDB::countActive () const{
 
+   }
+
+   TreeNode* TreeDB::getRoot() const{
+       return root;
+    }
+
+
+   
    // Prints the entire tree, in ascending order of key/name
-   friend ostream& operator<< (ostream& out, const TreeDB& rhs);
+   // ofstream& operator<< (ofstream& out, const TreeDB* rhs){
+   //    TreeNode* temp = rhs->getRoot();
+   //    TreeNode* temp2;
+   //    while (temp != NULL)
+   //    {
+   //       temp2 = temp ->getLeft();
+   //       while (temp2 != NULL)
+   //       {
+   //          out << temp2->getEntry();
+   //          temp2 = temp2->getLeft();
+   //       }
+   //    }
+   // }

@@ -39,7 +39,7 @@ public:
 	// prints the entry in the format 
     // name : IPaddress : active  followed by newline
     // active is printed as a string (active or inactive)
-    friend ofstream& operator<< (ofstream& out, const DBentry& rhs);
+    friend ofstream& operator<< (ofstream& out, const DBentry* rhs);
 };
 
 #endif 

@@ -12,16 +12,35 @@
 
 using namespace std;
 
+void print (TreeNode* temp){
+	if (temp == NULL)
+	{return;}
+	else if (temp->getLeft()!=NULL)
+	{print(temp->getLeft());}
+	else if (temp !=NULL)
+	{
+		cout << temp->getEntry()->getName();
+		cout << " : ";
+		cout << temp->getEntry()->getIPaddress();
+		cout << " : ";
+		if (temp->getEntry()->getActive())
+		cout << "active";
+		else
+		cout <<"inactive";
+		cout << "\n";
+	}
+	else
+	{print(temp->getRight());}
+}
 
 int main() {
 	
 	TreeDB* head = new TreeDB();
 	string line, command;
 	ifstream ifile("input.txt");
-	ofstream ofile("output.txt");
-	ofile << "> ";
+	cout << "> ";
 	getline (ifile, line); // Get a line from standard input
-	ofile << line << endl;
+	cout << line << endl;
 	while ( !ifile.eof() ) {
 		// Put the line in a stringstream for parsing
 		// Making a new stringstream for each line so flags etc. are in a known state
@@ -43,11 +62,11 @@ int main() {
 	        DBentry *tempDB = new DBentry(_name, _IPaddress, _active);
 	        if (head->insert(tempDB))
 	        {
-	        	ofile << "Success" << endl;
+	        	cout << "Success" << endl;
 	        }
 	        else
 	        {
-	        	ofile << "Error: entry already exists" << endl;
+	        	cout << "Error: entry already exists" << endl;
 	        }
 		}
 		else if (command == "find") {
@@ -57,17 +76,19 @@ int main() {
 			DBentry *tempDB = head->find(_name); 
 			if (tempDB == NULL)
 			{
-				ofile << "Error: entry does not exist" << endl;
+				cout << "Error: entry does not exist" << endl;
 			}
 			else {
-				ofile << *(tempDB->getEntry()) << endl;
+				cout << tempDB << endl;
 			}
 		}
-		ofile << "> ";
+		else if (command == "printall"){	
+			print(head->getRoot());
+		}
+		cout<< "> ";
 		getline (ifile, line);
-		ofile << line <<endl;
+		cout << line <<endl;
 	} // End input loop until EOF.
 	ifile.close();
-	ofile.close();
 	return 0;
 }

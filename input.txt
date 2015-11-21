@@ -5,3 +5,4 @@ insert  www.eecg.utoronto.ca  179333  inactive
 insert  www.altera.com  283299  active
 find  www.google.com
 find www.facebook.com
+printall
