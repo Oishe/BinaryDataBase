@@ -45,6 +45,6 @@ DBentry::~DBentry(){
 ofstream& operator<< (ofstream& out, const DBentry& rhs){
 	out << rhs.getName() << " : ";
 	out << rhs.getIPaddress() << " : ";
-	out <<(rhs.getActive()? "active":"inactive") << endl;
+	out <<(rhs.getActive()? "active":"inactive");
 	return out;
 }

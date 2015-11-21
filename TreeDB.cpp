@@ -29,10 +29,34 @@ using namespace std;
    bool TreeDB::insert(DBentry* newEntry){
       if (root == NULL)
       {
-         root = new DBentry(newEntry);
+         root = new TreeNode(newEntry);
          probesCount++;
+         return true;
       }
-   } 
+      else if (newEntry->getName() == root->getEntry()->getName())
+      {return false;}
+      else if (newEntry->getName() < root->getEntry()->getName())
+      {
+         if(root->getLeft()->insert(newEntry))
+         {
+            probesCount++;
+            return true;
+         }
+         else
+         {return false;}
+      }
+      else
+      {
+         if(root->getRight()->insert(newEntry))
+         {
+            probesCount++;
+            return true;
+         }
+         else
+         {return false;}  
+      }
+
+   }  
 
    // searches the database for an entry with a key equal to name.
    // If the entry is found, a pointer to it is returned.
@@ -40,7 +64,12 @@ using namespace std;
    // Also sets probesCount
    DBentry* TreeDB::find(string name){
       if (root==null){return NULL;}
-      else if (name == root->getEntry())
+      else if (name == root->getEntry()->getName())
+         {return root->getEntry();}
+      else if (name < root->getEntry()->getName())
+         {return root->getLeft()->find(name);}
+      else
+         {return root->getRight()->find(name);}
    }
 
    // deletes the entry with the specified name (key)  from the database.
@@ -56,7 +85,9 @@ using namespace std;
    void clear();
     
    // prints the number of probes stored in probesCount
-   void printProbes() const;
+   void TreeDB::printProbes() const{
+      //print probescount
+   }
    
    // computes and prints out the total number of active entries
    // in the database (i.e. entries with active==true).

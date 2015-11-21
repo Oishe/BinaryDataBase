@@ -12,13 +12,10 @@
 
 using namespace std;
 
-void inserter(){
 
-}
-
-int parser() {
+int main() {
 	
-	//DBentry newDB;
+	TreeDB* head = new TreeDB();
 	string line, command;
 	ifstream ifile("input.txt");
 	ofstream ofile("output.txt");
@@ -31,13 +28,10 @@ int parser() {
 		
 		stringstream Sline (line);
 		Sline >> command;
-			
-
 		//ofile << line <<endl;
-		
+
 		if (command == "insert") {
-			
-			// parse an insertR command
+			// parse an insert command
 			string _name;
 	        string __active;
 			unsigned int _IPaddress;
@@ -46,15 +40,29 @@ int parser() {
 	        Sline >> _IPaddress;
 	        Sline >> __active;
 	        _active = __active == "active" ? true : false;
-	        DBentry *newDB = new DBentry(_name, _IPaddress, _active);
-	        TreeNode newTN (newDB);
-	        //ofile << newDB;
-			ofile << *(newTN.getEntry()) <<endl;
-
+	        DBentry *tempDB = new DBentry(_name, _IPaddress, _active);
+	        if (head->insert(tempDB))
+	        {
+	        	ofile << "Success" << endl;
+	        }
+	        else
+	        {
+	        	ofile << "Error: entry already exists" << endl;
+	        }
 		}
-		//else if ( ... ) {
-		//...
-		//}
+		else if (command == "find") {
+			//find the DBentry
+			string _name;
+			Sline >> _name;
+			DBentry *tempDB = head->find(_name); 
+			if (tempDB == NULL)
+			{
+				ofile << "Error: entry does not exist" << endl;
+			}
+			else {
+				ofile << *(tempDB->getEntry()) << endl;
+			}
+		}
 		ofile << "> ";
 		getline (ifile, line);
 		ofile << line <<endl;
@@ -62,8 +70,4 @@ int parser() {
 	ifile.close();
 	ofile.close();
 	return 0;
-}
-
-int main(){
-	parser();
 }
